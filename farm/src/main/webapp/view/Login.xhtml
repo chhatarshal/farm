@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	encoding="UTF-8">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	
+	<head jsf:id="head">
+
+	</head>
+	
+<h:form>
+    <p:growl id="growl" /> 
+   <p:link outcome="users" value="See All">
+   </p:link>
+    <p:panel id="pnl" header="New User" style="margin-bottom:10px;">
+        <p:messages id="messages" />
+        <h:panelGrid columns="3" cellpadding="5">
+            <h:outputLabel for="firstname" value="Firstname: *" />
+            <p:inputText id="firstname" value="#{user.firstName}" required="true" label="Firstname">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="firstname" /> 
+            <h:outputLabel for="lastname" value="Lastname: *" />
+            <p:inputText id="lastname" value="#{user.lastName}" required="true" label="Lastname"/>
+            <p:message for="lastname" />            
+            <h:outputLabel for="password" value="Password: *" />
+            <p:password id="password" value="#{user.password}" required="true" label="Password"/>
+            <p:message for="password" />
+        </h:panelGrid> 
+        <p:commandButton id="saveBtn" value="Save" icon="ui-icon-check" style="margin:0" actionListener="#{user.save}" update="growl"/>
+    </p:panel>
+ 
+    <p:blockUI block="pnl" trigger="saveBtn" />
+</h:form>
+
+
+	</html>
+
+	
+</f:view>

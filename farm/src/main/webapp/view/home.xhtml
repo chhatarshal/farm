@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" encoding="UTF-8">
+
+	<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+
+<head jsf:id="head">
+
+</head>
+<p:growl id="msgs" showDetail="true" />
+<p:tabView>
+	<p:tab title="Home">
+		<h:panelGrid columns="1" cellpadding="10">
+		<h:panelGrid columns="3" style="margin:10px 0">
+	      <!--   <p:outputLabel for="template" value="Template:" style="font-weight:bold"/> -->
+	      <!--   <p:inputText id="template" value="#{dtColumnsView.columnTemplate}" size="20"/> -->
+	        <p:commandButton update="eggs" actionListener="#{dtColumnsView.buttonAction}" value="Refresh" process="@parent" icon="ui-icon-refresh" oncomplete="PF('eggsTable').clearFilters()"/>
+         </h:panelGrid>
+		
+		 <p:dataTable id="eggs" var="egg" value="#{dtColumnsView.eggs}" widgetVar="eggsTable" filteredValue="#{dtColumnsView.filteredEggs}">                    
+	        <p:columns value="#{dtColumnsView.columns}" var="column" columnIndexVar="colIndex" sortBy="#{egg[column.property]}" filterBy="#{egg[column.property]}">
+	            <f:facet name="header">
+	                <h:outputText value="#{column.header}" />
+	            </f:facet>
+	            <h:outputText value="#{egg[column.property]}" />
+	        </p:columns>
+	     </p:dataTable>	
+		</h:panelGrid>
+	</p:tab>
+	
+	
+<p:tab title="Add">		
+	<h:form>
+	    <p:growl id="growl" />  
+	    <p:panel id="pnl" header="New Entry" style="margin-bottom:10px;">
+	        <p:messages id="messages" />
+	          <h:panelGrid columns="8" cellpadding="5">
+	            <h:outputLabel for="totalBox" value="Total Box *" />
+	            <p:inputText id="totalBox" value="#{record.totalBox}" required="true" label="Total Box">
+	                <f:validateLength minimum="2" />
+	            </p:inputText>
+	            <p:message for="totalBox" />            
+	              </h:panelGrid>      
+	        <p:commandButton id="saveBtn" value="Save" icon="ui-icon-check" style="margin:0" actionListener="#{record.saverecord}" update="growl"/>
+	    </p:panel>  
+	   <p:blockUI block="pnl" trigger="saveBtn" />
+	</h:form>
+</p:tab>	
+	
+</p:tabView>
+
+
+
+	</html>
+
+
+</f:view>
