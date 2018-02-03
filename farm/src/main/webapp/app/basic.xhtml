@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	encoding="UTF-8">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+	
+	<head jsf:id="head">
+
+	</head>
+	<h:form id="form">
+    <p:growl id="msgs" showDetail="true" />
+ 
+    <p:dataTable id="basicDT" var="slot" value="#{dtSelectionView.slots}">
+        <p:column headerText="Time Slot">
+            <h:outputText value="#{slot.id}" />
+        </p:column>
+        <p:column headerText="Availability">
+            <h:outputText value="#{slot.name}" />
+        </p:column>
+        <p:column style="width:72px;text-align: center">
+             <p:commandButton  oncomplete="PF('slotDialog').show()" value="Book" title="View">
+                <f:setPropertyActionListener value="#{slot}" target="#{dtSelectionView.selectedSlot}" />
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+    </h:form>
+	</html>
+
+	
+</f:view>

@@ -1,6 +1,8 @@
 package org.farm.base.jsf.viewbeans;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -13,6 +15,8 @@ import javax.persistence.Table;
 
 import org.farm.base.configure.BaseDao;
 import org.farm.base.configure.Context;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @ManagedBean
 @Entity
@@ -77,11 +81,21 @@ public class User {
 		this.lastName = lastName;
 	}
 	 
-	public void save() {
+	public void loginCheck() {
+		System.out.println("=234232=====");
+		 Authentication authentication =
+			        SecurityContextHolder.getContext().getAuthentication();
+
 		Context context=new Context();
 		BaseDao baseDao=(BaseDao) context.getObject("baseDao");
-		baseDao.createEntity(new User("",this.getFirstName(),this.getLastName()),User.class);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You've registered"));
+		Map<String,Object> properties=new HashMap<String,Object>();
+		properties.put("firstName", this.getFirstName());
+		List searchList=baseDao.findByProperties(properties,User.class);
+		if(searchList != null && searchList.size()>0) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("success"));
+		}
+		///baseDao.createEntity(new User("",this.getFirstName(),this.getLastName()),User.class);
+		////FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You've registered"));
 	}
 	
 	public List<User> getUsers() {

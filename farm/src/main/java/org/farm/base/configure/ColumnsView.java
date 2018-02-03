@@ -19,9 +19,9 @@ import org.farm.base.jsf.viewbeans.Record;
 @ViewScoped
 public class ColumnsView implements Serializable {
      
-    private final static List<String> VALID_COLUMN_KEYS = Arrays.asList("id", "serialNo", "totalBox", "entryDate","totalEgg");
+    private final static List<String> VALID_COLUMN_KEYS = Arrays.asList("id", "serialNo", "totalBox", "entryDate","totalEgg","shade");
      
-    private String columnTemplate = "id entryDate totalBox totalEgg";
+    private String columnTemplate = "id shade entryDate totalBox totalEgg";
      
     private List<ColumnModel> columns;
      

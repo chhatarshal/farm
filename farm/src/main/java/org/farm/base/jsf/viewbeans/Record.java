@@ -2,8 +2,10 @@ package org.farm.base.jsf.viewbeans;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -30,6 +32,14 @@ public class Record {
 	
 	@Transient private Integer totalEgg;
  
+	@Transient private List<String> shades=new ArrayList<String>();
+	
+	private String shade;
+		
+	public void setShade(String shade) {
+		this.shade = shade;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -85,13 +95,30 @@ public class Record {
 	
 	
 	public void saverecord( ) {
+		String realId=this.getId()+""+this.getShade().split("\\s")[1];
+		this.setId(Integer.parseInt(realId));
 		Context context=new Context();
 		BaseDao baseDao=(BaseDao) context.getObject("baseDao");
 		baseDao.createEntity(this,Record.class);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("You've registered"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Save successful !"));
 	}
 
+	public List<String> getShades() {
+		shades.add("Shade 1");
+		shades.add("Shade 2");
+		shades.add("Shade 3");
+		shades.add("Shade 4");
+		return shades;
+	}
+	
+	public void onShadeChange() {
+	}
 
+	public String getShade() {
+		return this.shade;
+	}
 	
-	
+	public void updateSummary() {
+		
+	}
 }
